@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Inspectoría - Control y Registro de Atrasos</title>
+  <meta name="description" content="Sistema de inspectoría escolar para registro en tiempo real de atrasos y especificaciones por curso.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 1. MAIN HEADER WITH USER PROFILE & THEME TOGGLE -->
+    <header class="header-card">
+      <!-- Left: Title & Branding -->
+      <div class="header-title-wrapper">
+        <div class="header-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+            <path d="M6 13l3-3 3 2 4-5"/>
+            <path d="M16 7h3v3"/>
+          </svg>
+        </div>
+        <div class="header-text">
+          <h1>PANEL DE ADMINISTRACIÓN E INSPECTORÍA</h1>
+          <p>Sistema de control de asistencia, registro diario de ingresos tardíos y reporte analítico por curso.</p>
+        </div>
+      </div>
+
+      <!-- Right: User Profile & Light/Dark Theme Switcher -->
+      <div class="header-utility-section">
+        <!-- Theme Toggle Button -->
+        <button class="btn-theme-toggle" id="themeToggleBtn" title="Cambiar Modo Claro/Oscuro">
+          <!-- Sun Icon (Light Mode) -->
+          <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <!-- Moon Icon (Dark Mode) -->
+          <svg id="moonIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <!-- User Profile Card -->
+        <div class="user-profile-badge">
+          <div class="user-avatar-wrapper">
+            <img src="avatar.jpg" alt="Foto de Marcos Silva" class="user-avatar-img">
+            <span class="user-status-dot" title="En línea"></span>
+          </div>
+          <div class="user-info">
+            <span class="user-name">Marcos Silva</span>
+            <span class="user-role">Inspector General</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. MODULE NAVIGATION TABS (2 MODULES) -->
+    <nav class="modules-nav-grid" id="modulesNav">
+      <!-- Tab 1 -->
+      <button class="module-tab-btn active" data-module="1">
+        <span class="module-badge">Módulo 1</span>
+        <span class="module-tab-title">Registro Diario de Atrasos</span>
+      </button>
+
+      <!-- Tab 2 -->
+      <button class="module-tab-btn" data-module="2">
+        <span class="module-badge">Módulo 2</span>
+        <span class="module-tab-title">Control y Especificaciones por Curso</span>
+      </button>
+    </nav>
+
+    <!-- 3. MODULE 1 PANEL: Registro Diario de Atrasos -->
+    <section class="module-panel active" id="module1Panel">
+      <!-- Toolbar -->
+      <div class="filters-toolbar">
+        <div class="search-group">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="m1Search" class="search-input" placeholder="Buscar por Nombre, RUT o Curso...">
+        </div>
+
+        <button class="btn-filter" id="m1FilterBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+          Filtrar
+        </button>
+
+        <div class="filter-control">
+          <label for="m1CourseSelect">Curso</label>
+          <select id="m1CourseSelect" class="select-input">
+            <option value="all">Todos los cursos</option>
+            <option value="1°A">1°A</option>
+            <option value="1°B">1°B</option>
+            <option value="1°C">1°C</option>
+            <option value="2°A">2°A</option>
+            <option value="2°B">2°B</option>
+            <option value="2°C">2°C</option>
+            <option value="3° Administración">3° Administración</option>
+            <option value="3° Enfermería">3° Enfermería</option>
+            <option value="3° Programación">3° Programación</option>
+            <option value="3° Electrónica">3° Electrónica</option>
+            <option value="4° Administración">4° Administración</option>
+            <option value="4° Enfermería">4° Enfermería</option>
+            <option value="4° Programación">4° Programación</option>
+            <option value="4° Electrónica">4° Electrónica</option>
+          </select>
+        </div>
+
+        <div class="filter-control">
+          <label for="m1Date">Fecha</label>
+          <input type="date" id="m1Date" class="date-input" value="2024-08-13">
+        </div>
+
+        <button class="btn-action-primary" id="m1RegisterBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Registrar Atraso
+        </button>
+      </div>
+
+      <!-- Table 1: Daily Log -->
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 60px;">N°</th>
+              <th style="width: 170px;">Fecha y Hora</th>
+              <th style="width: 150px;">RUT</th>
+              <th>Nombre Estudiante</th>
+              <th style="width: 160px;">Curso</th>
+              <th class="col-center" style="width: 140px;">Estado</th>
+              <th class="col-center" style="width: 120px;">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="m1TableBody">
+            <!-- Dynamically Rendered -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. MODULE 2 PANEL: Control y Especificaciones por Curso -->
+    <section class="module-panel" id="module2Panel">
+      
+      <!-- Course Selector Section -->
+      <div class="courses-selector-section">
+        <div class="courses-selector-title">
+          <span>Seleccionar Curso para ver Especificaciones (14 Cursos Disponibles)</span>
+          <button class="btn-action-outline btn-action-green" id="m2ExportBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Exportar CSV
+          </button>
+        </div>
+
+        <div class="course-chips-grid" id="courseChipsGrid">
+          <!-- Dynamically populated course buttons: 1°A, 1°B, 1°C, 2°A, 2°B, 2°C, etc. -->
+        </div>
+
+        <!-- Selected Course Summary Metrics Bar -->
+        <div class="course-metrics-bar">
+          <div class="course-metrics-title" id="m2SelectedCourseTitle">
+            Especificaciones del Curso: 1°A
+          </div>
+          <div class="course-metrics-stats">
+            <div class="course-metric-item">Total Alumnos: <strong id="m2StatTotalStudents">38</strong></div>
+            <span>|</span>
+            <div class="course-metric-item">Total Atrasos: <strong id="m2StatTotalLates">56</strong></div>
+            <span>|</span>
+            <div class="course-metric-item">Promedio por Estudiante: <strong id="m2StatAvg">1,47</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters Toolbar inside Module 2 -->
+      <div class="filters-toolbar" style="margin-bottom: 1rem;">
+        <div class="search-group">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="m2Search" class="search-input" placeholder="Buscar estudiante en este curso por RUT o Nombre...">
+        </div>
+      </div>
+
+      <!-- Table 2: Course Specifications Table -->
+      <div class="table-wrapper m2-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">N°</th>
+              <th style="width: 140px;">RUT</th>
+              <th>Nombre Estudiante</th>
+              <th class="col-center">Total Atrasos</th>
+              <th class="col-center">Justificados</th>
+              <th class="col-center">Injustificados</th>
+              <th class="col-center" style="width: 180px;">% Atrasos / Promedio Día</th>
+              <th class="col-center">Detalles de Atrasos</th>
+            </tr>
+          </thead>
+          <tbody id="m2TableBody">
+            <!-- Dynamically Rendered for the Selected Course -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- APP MODAL BACKDROP -->
+  <div class="modal-backdrop" id="appModalBackdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Título del Modal</h3>
+        <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic Content -->
+      </div>
+      <div class="modal-footer" id="modalFooter">
+        <button class="btn-secondary" id="modalFooterCloseBtn">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
